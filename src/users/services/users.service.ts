@@ -8,7 +8,11 @@ export class UsersService {
         @Inject('USERS_MODEL')
         private usersModel: Model<Users>,
       ) {}
+
       getAllUsers():Promise<Users[]>{
         return  this.usersModel.find()
+      }
+      getUserById(userId:string):Promise<Users[]>{
+        return  this.usersModel.findById(userId)
       }
 }
