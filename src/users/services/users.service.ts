@@ -11,8 +11,9 @@ export class UsersService {
         private usersModel: Model<Users>,
       ) {}
       //  Get 
-      getAllUsers():Promise<Users[]>{
-        return  this.usersModel.find()
+      async getAllUsers():Promise<{data:Users[];count:number;status:number} >{
+        const user = await  this.usersModel.find().select('-_id firstname lastname')
+        return {data : user , count:user.length , status:200}
       }
       // Get By Id
       async getUserById(userId:string):Promise<Users>{
