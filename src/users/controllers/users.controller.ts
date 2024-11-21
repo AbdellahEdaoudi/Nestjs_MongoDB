@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Put, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, ValidationPipe } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/createUserDto.dto';
 import { updateUserDto } from '../dto/updateUserDto.dto';
@@ -23,13 +23,19 @@ export class UsersController {
     body:CreateUserDto ) {
         return this.usersService.createUser(body)
     }
-
+    // Patch or Put
     @Patch(":id")
     UpdateUser(
         @Param("id") id:string ,
         @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) 
         body:updateUserDto){
             return this.usersService.UpdateUser(id,body)
+    }
+
+    // Delete By id
+    @Delete(":id")
+    DeleteUser(@Param("id") id:string){
+            return this.usersService.DeleteUser(id)
     }
     
 }
