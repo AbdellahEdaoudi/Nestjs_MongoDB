@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { Users } from '../interfaces/users.interfaces';
 import { NotFoundError } from 'rxjs';
 import { CreateUserDto } from '../dto/createUserDto.dto';
+import { updateUserDto } from '../dto/updateUserDto.dto';
 
 @Injectable()
 export class UsersService {
@@ -27,5 +28,19 @@ export class UsersService {
       async createUser(body:CreateUserDto):Promise<Users>{
         const user = await this.usersModel.create(body)
         return user
+     }
+
+     // Put
+     async UpdateUser(id:string ,body:updateUserDto):Promise<Users>{
+      const updatedUser = await this.usersModel.findByIdAndUpdate(id,body,
+        {
+          new: true, // Return the updated document
+          runValidators: true, // Ensure validation rules apply
+        },
+      )
+      if (!updatedUser) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      return updatedUser
      }
 }

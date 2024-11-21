@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put, ValidationPipe } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/createUserDto.dto';
+import { updateUserDto } from '../dto/updateUserDto.dto';
 
 @Controller('users')
 export class UsersController {
@@ -21,6 +22,14 @@ export class UsersController {
     createUser(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) 
     body:CreateUserDto ) {
         return this.usersService.createUser(body)
+    }
+
+    @Patch(":id")
+    UpdateUser(
+        @Param("id") id:string ,
+        @Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true})) 
+        body:updateUserDto){
+            return this.usersService.UpdateUser(id,body)
     }
     
 }
