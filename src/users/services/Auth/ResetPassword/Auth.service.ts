@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException} from '@nestjs/common'
 import { Model } from 'mongoose';
-import { SignInDto } from 'src/users/controllers/Auth/authdto';
+import { SignInDto, SignUpDto } from 'src/users/controllers/Auth/authdto';
 import { Users } from 'src/users/interfaces/users.interfaces';
 
 @Injectable()
@@ -18,5 +18,10 @@ export class AuthService {
         }
         return user;
       }
-      SignUp(){}
+      async SignUp(body:SignUpDto){
+        console.log(body);
+        
+        const createuser  = await this.usersModel.create(body);
+        return createuser ; 
+      }
 }

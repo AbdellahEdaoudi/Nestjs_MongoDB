@@ -1,7 +1,7 @@
 import {Body, Controller, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Roles } from 'src/guards/roles.decorator';
 import { AuthService } from 'src/users/services/Auth/ResetPassword/Auth.service';
-import { SignInDto } from './authdto';
+import { SignInDto, SignUpDto } from './authdto';
 
 
 // SignIN Controller
@@ -21,11 +21,10 @@ export class AuthSignINController {
 @Controller('sign_up')
 export class AuthSignUpController {
     constructor (private readonly authService:AuthService){}
-
     @Post()
-    @Roles(["admin","user","manager"])
-    SignIn(){
-        return this.authService.SignUp()
+    SignUp(@Body(new ValidationPipe({whitelist:true,forbidNonWhitelisted:true}))
+      body:SignUpDto){
+        return this.authService.SignUp(body)
     }
     
 }
