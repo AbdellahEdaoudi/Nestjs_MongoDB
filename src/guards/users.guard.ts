@@ -16,7 +16,7 @@ import {
     ) {}
     async canActivate(context: ExecutionContext) {
       const roles = this.reflector.get(Roles, context.getHandler());
-      // console.log('roles', roles);
+      console.log('roles', roles);
 
       // Api Public
       if (!roles) {
