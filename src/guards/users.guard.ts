@@ -24,7 +24,8 @@ import {
       }
       // Get Token
       const request = context.switchToHttp().getRequest();
-      const token = (request.headers.authorization || '   ').split(' ', 2)[1];
+      // authorization = `Bearer abvfdifgbidsikgnhs`.split(' ', 2)[1]
+      const token = (request.headers.authorization || '   ').split(' ', 2)[1]; 
       // Verify Token
       // const token = this.extractTokenFromHeader(request);
       // console.log(token);
