@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
 export class SignInDto {
     @IsString({message:"email must be a string"})
@@ -26,6 +26,7 @@ export class SignUpDto {
     lastname: string;
     @IsString()
     @IsOptional()
+    @IsEnum(['user','admin','manager'])
     role:string;
 
 }

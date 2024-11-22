@@ -12,7 +12,7 @@ import { AuthService } from './services/Auth/ResetPassword/Auth.service';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '7200s' },
     })
   ],
   controllers: [UsersController,AuthSignINController,AuthSignUpController],
