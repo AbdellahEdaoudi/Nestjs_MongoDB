@@ -6,11 +6,11 @@ import { Roles } from 'src/guards/roles.decorator';
 import { UsersGuard } from 'src/guards/users.guard';
 
 @Controller('users')
+@UseGuards(UsersGuard)
 export class UsersController {
     constructor (private readonly usersService:UsersService){}
     // Get All Users
     @Roles(["admin","manager"])
-    @UseGuards(UsersGuard)
     @Get()
     getAllUsers() {
         return this.usersService.getAllUsers()

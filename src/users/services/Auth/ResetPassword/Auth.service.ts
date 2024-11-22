@@ -3,12 +3,13 @@ import { Model } from 'mongoose';
 import { SignInDto, SignUpDto } from 'src/users/controllers/Auth/authdto';
 import { Users } from 'src/users/interfaces/users.interfaces';
 import * as bcrypt from 'bcrypt';
-
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
     constructor(
         @Inject('USERS_MODEL')
         private usersModel: Model<Users>,
+        private JwtService:JwtService
       ) {}
       // SignIn 
       async SignIn(body: SignInDto) {
@@ -24,9 +25,14 @@ export class AuthService {
         if (!isPasswordValid) {
             throw new NotFoundException('Invalid Password');
         }
-        return user;
+        // Create Token By payload
+        const payload = {email:user.email,role:user.role}
+        const token = await this.JwtService.sign(payload,{
+            secret:process.env.JWT_SECRET
+        });
+        return {data:user,token};
     }
-      // SignUp
+      // SignUp ------------------------------------------------------------------
       async SignUp(body: SignUpDto) {
         console.log(body);
         
@@ -35,10 +41,15 @@ export class AuthService {
     
         // Replace the plain password with the hashed password
         body.password = hashedPassword;
+        body.role = "user"
         
         // Create the user with the hashed password
-        const createUser = await this.usersModel.create(body);
-        
-        return createUser;
+        const user = await this.usersModel.create(body);
+        // Create Token By payload
+        const payload = {email:user.email,role:user.role}
+        const token = await this.JwtService.sign(payload,{
+            secret:process.env.JWT_SECRET
+        });
+        return {data:user,token};
     }
 }
