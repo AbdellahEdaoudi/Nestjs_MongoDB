@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, ValidationPipe } from '@nestjs/common';
-import { UsersService } from '../services/users.service';
-import { CreateUserDto } from '../dto/createUserDto.dto';
-import { updateUserDto } from '../dto/updateUserDto.dto';
+import { UsersService } from '../../services/Admins/users.service';
+import { CreateUserDto } from '../../dto/Admins/createUserDto.dto';
+import { updateUserDto } from '../../dto/Admins/updateUserDto.dto';
 import { Roles } from 'src/guards/Roles.decorator';
 
 @Controller('users')
