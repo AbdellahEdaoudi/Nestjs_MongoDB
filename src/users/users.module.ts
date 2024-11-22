@@ -4,6 +4,8 @@ import { UsersController } from './controllers/Admins/users.controller';
 import { usersProviders } from './providers/users.providers';
 import { DatabaseModule } from 'src/database/database.module';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthSignINController, AuthSignUpController } from './controllers/Auth/Auth.controller';
+import { AuthService } from './services/Auth/ResetPassword/Auth.service';
 
 @Module({
   imports: [DatabaseModule,
@@ -11,9 +13,9 @@ import { JwtModule } from '@nestjs/jwt';
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '60s' },
-    }),
+    })
   ],
-  controllers: [UsersController],
-  providers: [...usersProviders,UsersService]
+  controllers: [UsersController,AuthSignINController,AuthSignUpController],
+  providers: [...usersProviders,UsersService,AuthService]
 })
 export class UsersModule {}
