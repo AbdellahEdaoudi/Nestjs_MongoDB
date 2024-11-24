@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),ServeStaticModule.forRoot({
@@ -14,7 +15,7 @@ import { join } from 'path';
     serveStaticOptions: {
       index:false
     }
-  }),DatabaseModule, UsersModule],
+  }),DatabaseModule, UsersModule, CloudinaryModule],
   controllers: [AppController],
   providers: [AppService],
 })
